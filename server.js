@@ -41,7 +41,6 @@ app.get('/searches/new', (req, res) => {
 
 
 app.post('/searches/show', (req, res) => {
-    console.log(req.body);
     //{ searchQuery: 'hello', searchBy: 'title', search: 'search' }
     //request google  google book api 
 
@@ -54,7 +53,6 @@ app.post('/searches/show', (req, res) => {
         //console.log(data.body.items[0]);
         var results = [];
         for (let index = 0; index < 10; index++) {
-
             const element = data.body.items[index];
             const book = new Book(
                 element.volumeInfo.title,
@@ -63,14 +61,8 @@ app.post('/searches/show', (req, res) => {
                 element.volumeInfo.description
             );
             results.push(book);
-
         }
-        console.log(results);
-
-
-        // res.render('pages/searches.new')
-
-        //    res.sendFile('./thanks.html', { root: './public' });
+        res.render('./pages/searches/show',{"results": results});
     });
 });
 
@@ -81,8 +73,16 @@ app.post('/searches/show', (req, res) => {
 function Book(title, img, authorName, description) {
     this.title = title || 'unknown title';
     this.img = img || 'https://i.imgur.com/J5LVHEL.jpg';
+    this.img=secure(img);
     this.authorName = authorName || 'unknown author';
     this.description = description || 'unavailable description';
+}
+function secure(url) {
+    if(url[5]!='s'){
+        var i=url.split("")
+        i.splice(4, 0, 's');
+      } 
+      return i.join("");
 }
 app.listen(PORT, () => {
     console.log('app is lestining in port ....', PORT);
