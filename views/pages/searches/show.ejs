@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Search Results</title>
+    <link rel="stylesheet" href="../../../styles/base.css">
 </head>
 <body>
     <main>
@@ -13,9 +14,12 @@
             <% results.forEach((item) => {%>
             <div class="grid-item">
               <img src="<%= item.img %>" alt="">
-              <h2><%= item.title %></h2>
-              <h5><%= item.authorName %></h2>
-              <p><%= item.description %></p>
+              <p class="grid-title"><%= item.title %></p>
+              <br>
+              <p class="grid-author"><%= item.authorName %></p>
+              <br>
+              <p class="grid-discriptioon"><%= item.description %></p>
+              <br>
             </div >
             <% }) %>
         </div>

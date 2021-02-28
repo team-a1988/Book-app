@@ -38,6 +38,10 @@ app.get('/searches/new', (req, res) => {
     res.render('./pages/searches/new')
 });
 
+app.get('/', (req,res) =>{
+    res.render('./pages/index')
+})
+
 
 
 app.post('/searches/show', (req, res) => {
@@ -62,9 +66,12 @@ app.post('/searches/show', (req, res) => {
             );
             results.push(book);
         }
-        res.render('./pages/searches/show',{"results": results});
+        res.render('./pages/searches/show', { "results": results });
+    }).catch(error => {
+        res.render('./pages/error', { "error": error })
     });
 });
+
 
 
 /********************************** **
@@ -73,16 +80,16 @@ app.post('/searches/show', (req, res) => {
 function Book(title, img, authorName, description) {
     this.title = title || 'unknown title';
     this.img = img || 'https://i.imgur.com/J5LVHEL.jpg';
-    this.img=secure(img);
+    this.img = secure(img);
     this.authorName = authorName || 'unknown author';
     this.description = description || 'unavailable description';
 }
 function secure(url) {
-    if(url[5]!='s'){
-        var i=url.split("")
+    if (url[5] != 's') {
+        var i = url.split("")
         i.splice(4, 0, 's');
-      } 
-      return i.join("");
+    }
+    return i.join("");
 }
 app.listen(PORT, () => {
     console.log('app is lestining in port ....', PORT);

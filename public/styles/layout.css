@@ -3,9 +3,17 @@
     display: grid;
     grid-template-columns: 1fr;
     grid-template-rows: 1fr 1fr 1fr 1fr;
+    gap: 20px;
+    text-align: center;
+
 } 
 
 .grid-item{
     font-size: 30px;
-    
+    background-color:#D8D8D8;
+    margin-left: 5%;
+    margin-right: 5%;      
+}
+.grid-title{
+    color: rgb(122, 81, 81)
 }
