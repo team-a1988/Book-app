@@ -31,8 +31,20 @@ app.get('/hello', (req, res)=> {
 
 app.get('/searches/new', (req, res)=>{
     res.render('./pages/searches/new')
-})
-
+});
+app.get('/searches/show', (req, res)=>{
+   console.log(req.query);
+   
+});
+/********************************** **
+***************END POINTS  ***********
+***************************************/ 
+function Book(title,img,authorName,description) {
+    this.title=title || 'unknown title';
+    this.img=img || 'https://i.imgur.com/J5LVHEL.jpg';
+    this.authorName=authorName || 'unknown author';
+    this.description=description || 'unavailable description';
+}
 app.listen(PORT,()=>{
     console.log('app is lestining in port ....',PORT);
 });
