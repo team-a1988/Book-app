@@ -16,7 +16,7 @@
     </header>
     <main>
         <div class="../../../styles/base.css">
-        <form action="/show" method="POST">
+        <form action="/searches/show" method="POST">
             <input class="grid-item" type="text" name="searchQuery" placeholder="Enter a title or author">
             <div class="grid-item">
                 <label for="title-radio"> Title</label>
@@ -25,7 +25,6 @@
             <div class="grid-item">
                 <label for="author-radio"> Author</label>
                 <input id="author-radio" type="radio" name="searchBy" value="author">
-
             </div>
             <button class="grid-item" name="search" id="search" value="search"> Search by the Google Book API </button>
         </div>
