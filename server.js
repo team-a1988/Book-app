@@ -34,13 +34,10 @@ app.get('/hello', (req, res) => {
     console.log("the main route")
     res.render('./pages/index');
 });
-
-
 app.get('/searches/new', (req, res) => {
     // console.log(res, req);
     res.render('./pages/searches/new')
 });
-
 app.get('/', (req, res) => {
     console.log("hello i am here ...............................");
     const query='SELECT author,title,isbn,image_url,description FROM books';
@@ -57,9 +54,6 @@ app.get('/', (req, res) => {
     });
     
 })
-
-
-
 app.post('/searches/show', (req, res) => {
     //{ searchQuery: 'hello', searchBy: 'title', search: 'search' }
     //request google  google book api 
@@ -99,17 +93,16 @@ app.get('/books/:id', (req,res)=>{
     client.
     query(query,safeValue).
     then(data=>{
-        // console.log("the data rows ",data.rows);
-        // console.log("the type data.rows of ",typeof data);
-        res.redirect('./show')
+             console.log("the data rows ",data.rows);
+             console.log("the type data.rows of ",typeof data);
+        res.render('./pages/books/show.ejs',{"books":data.rows})
+        //res.redirect('show.ejs')
     }).catch(error=>{
         console.log(error);
         res.render('./pages/error', { "error": error })
     });
     
 })
-
-
 app.get('/books/show', (req,res)=>{
 //     console.log("params =", req.params);
 // console.log("query is ",req.query);
