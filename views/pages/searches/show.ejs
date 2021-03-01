@@ -20,9 +20,10 @@
               <br>
               <p class="grid-discriptioon"><%= item.description %></p>
               <br>
-              <form action="/books:<%= item.title%>" method="POST">
-                <button>Select This Book</button>
-            </form>
+              <form action="/books" method="POST">
+                <input type="hidden" name="item" value="<%=JSON.stringify(item)%>">
+               <input type="submit" value="Select This Book">
+              </form>
             </div >
             <% }) %>
         </div>

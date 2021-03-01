@@ -39,14 +39,10 @@ app.get('/searches/new', (req, res) => {
     res.render('./pages/searches/new')
 });
 app.get('/', (req, res) => {
-    console.log("hello i am here ...............................");
     const query='SELECT author,title,isbn,image_url,description FROM books';
     client.
     query(query).
     then(data=>{
-        // console.log(data.rows);
-        // console.log("the data rows ",data.rows);
-        // console.log("the type data.rows of ",typeof data);
         res.render('./pages/index',{"books":data.rows})
     }).catch(error=>{
         console.log(error);
@@ -76,8 +72,6 @@ app.post('/searches/show', (req, res) => {
                 element.volumeInfo.industryIdentifiers
             );
             results.push(book);
-            console.log(results);
-
         }
         res.render('./pages/searches/show', { "results": results });
     }).catch(error => {
@@ -85,7 +79,6 @@ app.post('/searches/show', (req, res) => {
         res.render('./pages/error', { "error": error })
     });
 });
-
 app.get('/books/:id', (req,res)=>{
     let id = req.params.id;
     const query='SELECT author,title,isbn,image_url,description FROM books WHERE id=$1';
@@ -93,27 +86,35 @@ app.get('/books/:id', (req,res)=>{
     client.
     query(query,safeValue).
     then(data=>{
-             console.log("the data rows ",data.rows);
-             console.log("the type data.rows of ",typeof data);
         res.render('./pages/books/show.ejs',{"books":data.rows})
-        //res.redirect('show.ejs')
     }).catch(error=>{
         console.log(error);
         res.render('./pages/error', { "error": error })
-    });
-    
+    }); 
 })
 app.get('/books/show', (req,res)=>{
 //     console.log("params =", req.params);
 // console.log("query is ",req.query);
 })
-
-app.post('/books:element', (req,res)=>{
-   console.log(req.params.element);
+app.post('/books', (req,res)=>{
+    const item=JSON.parse(req.body.item);
+    const dbQuery='INSERT INTO books (author, title, isbn, image_url,description)VALUES($1,$2,$3,$4,$5)'
+    const safeValues=[item.author,item.title,item.isbn,item.image_url,item.description]
+    console.log(safeValues)
+    client.
+    query(dbQuery,safeValues).then(data=>{
+        console.log("successfully inserted ");
+        console.log(data);
+        res.render('./pages/books/show.ejs',{"books":Array.of(item)})
+    }).catch(error=>{
+        console.log("error in inserting to db\n",error);
+        res.render('./pages/error', { "error": error })
+    })
 })
 
+
 /********************************** **
-***************END POINTS  ***********
+***************DATA MODEL  ***********
 ***************************************/
 function Book(title, img, authorName, description, isbn) {
     this.title = title || 'unknown title';
@@ -123,6 +124,7 @@ function Book(title, img, authorName, description, isbn) {
     this.description = description || 'unavailable description';
     this.isbn = formatIsbn(isbn) || "unavailable isbn";
 }
+
 /***************************************** 
 *****************************************
 ***************helper********************
