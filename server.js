@@ -70,7 +70,7 @@ app.post('/searches/show', (req, res) => {
             const element = data.body.items[index];
             const book = new Book(
                 element.volumeInfo.title,
-                element.volumeInfo.imageLinks.thumbnail,
+                element.volumeInfo.imageLinks,
                 element.volumeInfo.authors,
                 element.volumeInfo.description,
                 element.volumeInfo.industryIdentifiers
@@ -108,13 +108,17 @@ app.get('/books/show', (req,res)=>{
 // console.log("query is ",req.query);
 })
 
+app.post('/books:element', (req,res)=>{
+   console.log(req.params.element);
+})
+
 /********************************** **
 ***************END POINTS  ***********
 ***************************************/
 function Book(title, img, authorName, description, isbn) {
     this.title = title || 'unknown title';
-    this.img = img || 'https://i.imgur.com/J5LVHEL.jpg';
-    this.img = secure(img);
+    this.img = secure(img) || 'https://i.imgur.com/J5LVHEL.jpg';
+    // this.img = secure(img);
     this.authorName = formatAuthor(authorName) || 'unknown author';
     this.description = description || 'unavailable description';
     this.isbn = formatIsbn(isbn) || "unavailable isbn";
@@ -123,7 +127,9 @@ function Book(title, img, authorName, description, isbn) {
 *****************************************
 ***************helper********************
 *******************************************/
-function secure(url) {
+function secure(img) {
+    if(typeof img==typeof undefined) return null;
+    let url= img.thumbnail;
     if (url[5] != 's') {
         var i = url.split("")
         i.splice(4, 0, 's');
@@ -141,6 +147,11 @@ function formatAuthor(author){
         return author.join(", ");
     return null;
 }
+// function imageNull (img){
+//     if(typeof img==typeof undefined) return null;
+//     return img.thumbnail;
+// }
+
 client.connect().then(()=>{
     app.listen(PORT, () => {
         console.log('app is lestining in port ....', PORT);

@@ -20,9 +20,13 @@
               <br>
               <p class="grid-discriptioon"><%= item.description %></p>
               <br>
+              <form action="/books:<%= item.title%>" method="POST">
+                <button>Select This Book</button>
+            </form>
             </div >
             <% }) %>
         </div>
+       
         
     </main>
    
