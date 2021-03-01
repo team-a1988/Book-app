@@ -101,12 +101,18 @@ app.get('/books/:id', (req,res)=>{
     then(data=>{
         // console.log("the data rows ",data.rows);
         // console.log("the type data.rows of ",typeof data);
-        res.render('./pages/index')
+        res.redirect('./show')
     }).catch(error=>{
         console.log(error);
         res.render('./pages/error', { "error": error })
     });
     
+})
+
+
+app.get('/books/show', (req,res)=>{
+//     console.log("params =", req.params);
+// console.log("query is ",req.query);
 })
 
 /********************************** **
