@@ -1,0 +1,22 @@
+
+<section>
+    <ul>
+        <%books.forEach(element=>{%>
+            <li>
+                <%=element.author%>
+            </li>
+            <li>
+                <%=element.title%>
+            </li>
+            <li>
+                <%=element.image_url%>
+            </li>
+            <li>
+                <%=element.description%>
+            </li>
+            <li>
+                <%=element.isbn%>
+            </li>
+            <%})%>
+    </ul>
+</section>

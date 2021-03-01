@@ -47,7 +47,9 @@ app.get('/', (req, res) => {
     client.
     query(query).
     then(data=>{
-        console.log(data.rows);
+        // console.log(data.rows);
+        // console.log("the data rows ",data.rows);
+        // console.log("the type data.rows of ",typeof data);
         res.render('./pages/index',{"books":data.rows})
     }).catch(error=>{
         console.log(error);
@@ -90,7 +92,22 @@ app.post('/searches/show', (req, res) => {
     });
 });
 
-
+app.get('/books/:id', (req,res)=>{
+    let id = req.params.id;
+    const query='SELECT author,title,isbn,image_url,description FROM books WHERE id=$1';
+    let safeValue = [id];
+    client.
+    query(query,safeValue).
+    then(data=>{
+        // console.log("the data rows ",data.rows);
+        // console.log("the type data.rows of ",typeof data);
+        res.render('./pages/index')
+    }).catch(error=>{
+        console.log(error);
+        res.render('./pages/error', { "error": error })
+    });
+    
+})
 
 /********************************** **
 ***************END POINTS  ***********
