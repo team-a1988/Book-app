@@ -13,7 +13,7 @@
         <div class="grid-container">
             <% results.forEach((item) => {%>
             <div class="grid-item">
-              <img src="<%= item.img %>" alt="">
+              <img src="<%= item.image_url%>" alt="">
               <p class="grid-title"><%= item.title %></p>
               <br>
               <p class="grid-author"><%= item.authorName %></p>
@@ -22,7 +22,7 @@
               <br>
               <form action="/books" method="POST">
                 <input type="hidden" name="item" value="<%=JSON.stringify(item)%>">
-               <input type="submit" value="Select This Book">
+                <input type="submit" value="Select This Book">
               </form>
             </div >
             <% }) %>
