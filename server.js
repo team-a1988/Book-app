@@ -1,4 +1,3 @@
-
 // load the server dependencies
 const express = require('express');
 const cors = require('cors');
@@ -10,15 +9,11 @@ const app = express();
 const superagent = require('superagent');
 const { text } = require('express');
 app.use(cors());
-//const client = new pg.Client(process.env.DATABASE_URL);
-const client = new pg.Client({ connectionString: process.env.DATABASE_URL, ssl: { rejectUnauthorized: false } });//heroko
-
-
-
+const client = new pg.Client(process.env.DATABASE_URL);
+//const client = new pg.Client({ connectionString: process.env.DATABASE_URL, ssl: { rejectUnauthorized: false } });//heroko
 
 app.use(express.static('./public'));
 app.use(express.urlencoded({ extended: true }));
-
 
 const PORT = process.env.PORT;
 
@@ -113,13 +108,12 @@ app.post('/books', (req,res)=>{
     })
 })
 
-
 /********************************** **
 ***************DATA MODEL  ***********
 ***************************************/
 function Book(title, img, authorName, description, isbn) {
     this.title = title || 'unknown title';
-    this.img = secure(img) || 'https://i.imgur.com/J5LVHEL.jpg';
+    this.image_url = secure(img) || 'https://i.imgur.com/J5LVHEL.jpg';
     // this.img = secure(img);
     this.authorName = formatAuthor(authorName) || 'unknown author';
     this.description = description || 'unavailable description';
@@ -150,11 +144,6 @@ function formatAuthor(author){
         return author.join(", ");
     return null;
 }
-// function imageNull (img){
-//     if(typeof img==typeof undefined) return null;
-//     return img.thumbnail;
-// }
-
 client.connect().then(()=>{
     app.listen(PORT, () => {
         console.log('app is lestining in port ....', PORT);
